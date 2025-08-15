@@ -7,7 +7,7 @@ export default defineConfig({
     environment: 'jsdom',
     globals: true,
     setupFiles: ['./tests/unit/test-setup.ts'],
-    include: ['tests/unit/**/*.spec.{ts,tsx}'],
+    include: ['src/**/*.spec.{ts,tsx}', 'tests/unit/**/*.spec.{ts,tsx}'],
     env: {
       NEXT_PUBLIC_APP_BASE_URL: 'http://localhost:3000',
       DATABASE_URL: 'libsql://test.db',
