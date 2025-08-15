@@ -1,0 +1,168 @@
+import { render, screen } from '@testing-library/react'
+import userEvent from '@testing-library/user-event'
+import { describe, expect, it, vi } from 'vitest'
+import { CTAButton } from '~/features/landing/components/cta-button'
+
+// Mock framer-motion
+vi.mock('framer-motion', () => ({
+  motion: {
+    button: ({ children, ...props }: any) => <button {...props}>{children}</button>,
+    div: ({ children, ...props }: any) => <div {...props}>{children}</div>,
+  },
+}))
+
+// Mock Next.js Link
+vi.mock('next/link', () => ({
+  default: ({ children, href, ...props }: any) => (
+    <a href={href} {...props}>
+      {children}
+    </a>
+  ),
+}))
+
+describe('CTAButton', () => {
+  const user = userEvent.setup()
+
+  it('CTAボタンが正しくレンダリングされる', () => {
+    render(<CTAButton href="/register">無料で始める</CTAButton>)
+
+    const button = screen.getByRole('link', { name: '無料で始める' })
+    expect(button).toBeInTheDocument()
+    expect(button).toHaveAttribute('href', '/register')
+  })
+
+  it('プライマリスタイルが適用される', () => {
+    render(
+      <CTAButton href="/register" variant="primary">
+        登録
+      </CTAButton>,
+    )
+
+    const button = screen.getByRole('link', { name: '登録' })
+    expect(button).toBeInTheDocument()
+  })
+
+  it('セカンダリスタイルが適用される', () => {
+    render(
+      <CTAButton href="/login" variant="secondary">
+        ログイン
+      </CTAButton>,
+    )
+
+    const button = screen.getByRole('link', { name: 'ログイン' })
+    expect(button).toBeInTheDocument()
+  })
+
+  it('サイズが正しく適用される', () => {
+    render(
+      <CTAButton href="/register" size="large">
+        大きなボタン
+      </CTAButton>,
+    )
+
+    const button = screen.getByRole('link', { name: '大きなボタン' })
+    expect(button).toBeInTheDocument()
+  })
+
+  it('無効状態が正しく動作する', () => {
+    render(
+      <CTAButton href="/register" disabled>
+        無効ボタン
+      </CTAButton>,
+    )
+
+    const button = screen.getByRole('link', { name: '無効ボタン' })
+    expect(button).toBeInTheDocument()
+  })
+
+  it('ローディング状態が表示される', () => {
+    render(
+      <CTAButton href="/register" loading>
+        読み込み中
+      </CTAButton>,
+    )
+
+    const button = screen.getByRole('link', { name: '読み込み中' })
+    expect(button).toBeInTheDocument()
+  })
+
+  it('アイコンが表示される', () => {
+    render(
+      <CTAButton href="/register" icon="ArrowRight">
+        次へ
+      </CTAButton>,
+    )
+
+    const button = screen.getByRole('link', { name: '次へ' })
+    expect(button).toBeInTheDocument()
+  })
+
+  it('全幅設定が適用される', () => {
+    render(
+      <CTAButton href="/register" fullWidth>
+        全幅ボタン
+      </CTAButton>,
+    )
+
+    const button = screen.getByRole('link', { name: '全幅ボタン' })
+    expect(button).toBeInTheDocument()
+  })
+
+  it('クリックイベントが正しく動作する', async () => {
+    const handleClick = vi.fn()
+    render(
+      <CTAButton href="/register" onClick={handleClick}>
+        クリックテスト
+      </CTAButton>,
+    )
+
+    const button = screen.getByRole('link', { name: 'クリックテスト' })
+    await user.click(button)
+
+    expect(handleClick).toHaveBeenCalledTimes(1)
+  })
+
+  it('外部リンクが新しいタブで開く', () => {
+    render(
+      <CTAButton href="https://example.com" external>
+        外部リンク
+      </CTAButton>,
+    )
+
+    const button = screen.getByRole('link', { name: '外部リンク' })
+    expect(button).toHaveAttribute('target', '_blank')
+    expect(button).toHaveAttribute('rel', 'noopener noreferrer')
+  })
+
+  it('カスタムclassNameが適用される', () => {
+    render(
+      <CTAButton href="/register" className="custom-class">
+        カスタム
+      </CTAButton>,
+    )
+
+    const button = screen.getByRole('link', { name: 'カスタム' })
+    expect(button).toHaveClass('custom-class')
+  })
+
+  it('アクセシビリティ属性が正しく設定される', () => {
+    render(
+      <CTAButton href="/register" aria-label="アカウント登録" aria-describedby="register-help">
+        登録
+      </CTAButton>,
+    )
+
+    const button = screen.getByRole('link', { name: 'アカウント登録' })
+    expect(button).toHaveAttribute('aria-describedby', 'register-help')
+  })
+
+  it('data属性が正しく設定される', () => {
+    render(
+      <CTAButton href="/register" data-testid="register-button">
+        登録
+      </CTAButton>,
+    )
+
+    expect(screen.getByTestId('register-button')).toBeInTheDocument()
+  })
+})

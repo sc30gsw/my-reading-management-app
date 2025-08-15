@@ -5,6 +5,68 @@ import { vi } from 'vitest'
 // React をグローバルで利用可能にする
 global.React = React
 
+// Window オブジェクトのセットアップ (jsdom環境でも確実に利用できるようにする)
+Object.defineProperty(window, 'localStorage', {
+  value: {
+    getItem: vi.fn(),
+    setItem: vi.fn(),
+    removeItem: vi.fn(),
+    clear: vi.fn(),
+    length: 0,
+    key: vi.fn(),
+  },
+  writable: true,
+})
+
+Object.defineProperty(window, 'sessionStorage', {
+  value: {
+    getItem: vi.fn(),
+    setItem: vi.fn(),
+    removeItem: vi.fn(),
+    clear: vi.fn(),
+    length: 0,
+    key: vi.fn(),
+  },
+  writable: true,
+})
+
+// IntersectionObserver のモック
+global.IntersectionObserver = vi.fn(() => ({
+  observe: vi.fn(),
+  unobserve: vi.fn(),
+  disconnect: vi.fn(),
+  root: null,
+  rootMargin: '',
+  thresholds: [],
+  takeRecords: vi.fn(() => []),
+})) as any
+
+// ResizeObserver のモック
+global.ResizeObserver = vi.fn(() => ({
+  observe: vi.fn(),
+  unobserve: vi.fn(),
+  disconnect: vi.fn(),
+}))
+
+// requestAnimationFrame のモック
+global.requestAnimationFrame = vi.fn((cb) => setTimeout(cb, 0)) as any
+global.cancelAnimationFrame = vi.fn()
+
+// matchMedia のモック
+Object.defineProperty(window, 'matchMedia', {
+  writable: true,
+  value: vi.fn().mockImplementation((query) => ({
+    matches: false,
+    media: query,
+    onchange: null,
+    addListener: vi.fn(), // deprecated
+    removeListener: vi.fn(), // deprecated
+    addEventListener: vi.fn(),
+    removeEventListener: vi.fn(),
+    dispatchEvent: vi.fn(),
+  })),
+})
+
 // 環境変数のモック
 vi.mock('~/env', () => ({
   env: {
