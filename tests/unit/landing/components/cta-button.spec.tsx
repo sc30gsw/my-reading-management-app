@@ -191,22 +191,22 @@ describe('CTAButton', () => {
 
   it('アクセシビリティ属性が正しく設定される', () => {
     render(
-      <CTAButton href="/sign-up" aria-label="アカウント登録" aria-describedby="register-help">
+      <CTAButton href="/sign-up" aria-label="アカウント登録" aria-describedby="sign-up-help">
         登録
       </CTAButton>,
     )
 
     const button = screen.getByRole('link', { name: 'アカウント登録' })
-    expect(button).toHaveAttribute('aria-describedby', 'register-help')
+    expect(button).toHaveAttribute('aria-describedby', 'sign-up-help')
   })
 
   it('data属性が正しく設定される', () => {
     render(
-      <CTAButton href="/sign-up" data-testid="register-button">
+      <CTAButton href="/sign-up" data-testid="sign-up-button">
         登録
       </CTAButton>,
     )
 
-    expect(screen.getByTestId('register-button')).toBeInTheDocument()
+    expect(screen.getByTestId('sign-up-button')).toBeInTheDocument()
   })
 })

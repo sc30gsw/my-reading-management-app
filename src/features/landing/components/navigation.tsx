@@ -236,7 +236,7 @@ export function Navigation() {
               <LoginCTA
                 size="md"
                 variant={isScrolled ? 'outline' : 'secondary'}
-                trackingId="nav-login"
+                trackingId="nav-sign-in"
                 className={
                   isScrolled
                     ? 'border-slate-300 text-slate-700'
@@ -246,7 +246,7 @@ export function Navigation() {
 
               <RegisterCTA
                 size="md"
-                trackingId="nav-register"
+                trackingId="nav-sign-up"
                 className="bg-blue-600 text-white hover:bg-blue-700"
               />
             </motion.div>

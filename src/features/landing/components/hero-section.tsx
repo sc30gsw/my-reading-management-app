@@ -102,7 +102,7 @@ export function HeroSection({ className, variant = 'default' }: HeroSectionProps
             >
               <CTAButtonGroup
                 primary={{
-                  action: 'register',
+                  action: 'sign-up',
                   size: 'xl',
                   trackingId: 'hero-primary',
                   className: 'shadow-lg hover:shadow-xl',

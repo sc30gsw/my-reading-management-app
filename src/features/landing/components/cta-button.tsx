@@ -8,7 +8,7 @@ import { cn } from '~/features/landing/utils'
 
 export type CTAVariant = 'default' | 'primary' | 'secondary' | 'outline' | 'ghost' | 'destructive'
 export type CTASize = 'sm' | 'md' | 'lg' | 'xl' | 'large'
-export type CTAAction = 'register' | 'login' | 'demo' | 'contact' | 'pricing'
+export type CTAAction = 'sign-up' | 'sign-in' | 'demo' | 'contact' | 'pricing'
 
 type CTAButtonProps = {
   variant?: CTAVariant
@@ -33,17 +33,17 @@ type CTAButtonProps = {
 
 // CTA action configurations
 const CTA_ACTIONS = {
-  register: {
+  'sign-up': {
     text: '無料で始める',
     href: '/sign-up',
     icon: UserPlus,
-    trackingEvent: 'cta_register_click',
+    trackingEvent: 'cta_sign_up_click',
   },
-  login: {
+  'sign-in': {
     text: 'ログイン',
     href: '/sign-in',
     icon: LogIn,
-    trackingEvent: 'cta_login_click',
+    trackingEvent: 'cta_sign_in_click',
   },
   demo: {
     text: 'デモを見る',
@@ -126,7 +126,7 @@ function mapVariant(
 export function CTAButton({
   variant = 'primary',
   size = 'lg',
-  action = 'register',
+  action = 'sign-up',
   text,
   href,
   className,
@@ -175,7 +175,7 @@ export function CTAButton({
         )
       )}
       {children || finalText}
-      {showIcon && !loading && action !== 'login' && (
+      {showIcon && !loading && action !== 'sign-in' && (
         <motion.div
           className="ml-2"
           animate={{ x: isHovered ? 2 : 0 }}
@@ -275,7 +275,7 @@ export function CTAButton({
 export function RegisterCTA({ className, ...props }: Omit<CTAButtonProps, 'action'>) {
   return (
     <CTAButton
-      action="register"
+      action="sign-up"
       variant="default"
       className={cn('bg-blue-600 text-white hover:bg-blue-700', className)}
       {...props}
@@ -286,7 +286,7 @@ export function RegisterCTA({ className, ...props }: Omit<CTAButtonProps, 'actio
 export function LoginCTA({ className, ...props }: Omit<CTAButtonProps, 'action'>) {
   return (
     <CTAButton
-      action="login"
+      action="sign-in"
       variant="outline"
       className={cn('border-blue-600 text-blue-600 hover:bg-blue-50', className)}
       {...props}
@@ -355,7 +355,7 @@ export function ProgressiveEnhancedCTA({
           props.className,
         )}
       >
-        {children || CTA_ACTIONS[props.action || 'register'].text}
+        {children || CTA_ACTIONS[props.action || 'sign-up'].text}
       </a>
     )
   }

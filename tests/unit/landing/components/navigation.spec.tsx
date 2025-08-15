@@ -111,7 +111,7 @@ vi.mock('~/features/landing/components/cta-button', () => ({
   LoginCTA: ({ className, trackingId, external, ...props }: any) => (
     <button
       className={className}
-      data-testid="login-cta"
+      data-testid="sign-in-cta"
       data-external={external ? 'true' : 'false'}
       {...props}
     >
@@ -121,7 +121,7 @@ vi.mock('~/features/landing/components/cta-button', () => ({
   RegisterCTA: ({ className, trackingId, external, ...props }: any) => (
     <button
       className={className}
-      data-testid="register-cta"
+      data-testid="sign-up-cta"
       data-external={external ? 'true' : 'false'}
       {...props}
     >
@@ -223,8 +223,8 @@ describe('Navigation', () => {
 
     it('renders CTA buttons', () => {
       render(<Navigation />)
-      expect(screen.getByTestId('login-cta')).toBeInTheDocument()
-      expect(screen.getByTestId('register-cta')).toBeInTheDocument()
+      expect(screen.getByTestId('sign-in-cta')).toBeInTheDocument()
+      expect(screen.getByTestId('sign-up-cta')).toBeInTheDocument()
     })
 
     it('renders mobile menu button', () => {

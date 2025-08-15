@@ -278,8 +278,8 @@ export const ERROR_MESSAGES = {
 
 // Success messages
 export const SUCCESS_MESSAGES = {
-  registration: 'アカウントが正常に作成されました。',
-  login: 'ログインしました。',
+  'sign-up': 'アカウントが正常に作成されました。',
+  'sign-in': 'ログインしました。',
   inquiry: 'お問い合わせを送信しました。',
 } as const
 

@@ -57,7 +57,7 @@ vi.mock('~/features/landing/components/cta-button', () => ({
     </div>
   ),
   RegisterCTA: ({ className, ...props }: any) => (
-    <button className={className} data-testid="register-cta" {...props}>
+    <button className={className} data-testid="sign-up-cta" {...props}>
       無料で始める
     </button>
   ),
@@ -266,8 +266,8 @@ describe('HeroSection', () => {
     it('passes correct props to CTA button group', () => {
       render(<HeroSection />)
 
-      // Primary CTA should be register action
-      expect(screen.getByTestId('primary-cta')).toHaveTextContent('register')
+      // Primary CTA should be sign-up action
+      expect(screen.getByTestId('primary-cta')).toHaveTextContent('sign-up')
 
       // Secondary CTA should be demo action
       expect(screen.getByTestId('secondary-cta')).toHaveTextContent('demo')
