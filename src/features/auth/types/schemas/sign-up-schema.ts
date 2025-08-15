@@ -24,6 +24,7 @@ export const signUpSchema = z.object({
           ? ERROR_MESSAGE.REQUIRED_USER_NAME
           : ERROR_MESSAGE.INVALID_USER_NAME,
     })
+    .min(1, { message: ERROR_MESSAGE.REQUIRED_USER_NAME })
     .max(128, { message: ERROR_MESSAGE.TOO_LONG_USER_NAME }),
 })
 
