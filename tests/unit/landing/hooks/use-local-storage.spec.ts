@@ -127,7 +127,7 @@ describe('useLocalStorage', () => {
   describe('initial state', () => {
     it('should initialize with default value when localStorage is empty', () => {
       mockGetStorageItem.mockReturnValue('defaultValue')
-      
+
       const { result } = renderHook(() => useLocalStorage('testKey', 'defaultValue'))
 
       expect(result.current[0]).toBe('defaultValue')
@@ -136,7 +136,7 @@ describe('useLocalStorage', () => {
 
     it('should initialize with value from localStorage when available', () => {
       mockGetStorageItem.mockReturnValue('storedValue')
-      
+
       const { result } = renderHook(() => useLocalStorage('testKey', 'defaultValue'))
 
       expect(result.current[0]).toBe('storedValue')
@@ -181,7 +181,7 @@ describe('useLocalStorage', () => {
     it('should return default value on server (window undefined)', () => {
       // Mock the getStorageItem to return default value for SSR case
       mockGetStorageItem.mockReturnValue('defaultValue')
-      
+
       const { result } = renderHook(() => useLocalStorage('testKey', 'defaultValue'))
 
       expect(result.current[0]).toBe('defaultValue')
@@ -192,7 +192,7 @@ describe('useLocalStorage', () => {
   describe('setValue functionality', () => {
     it('should update state and localStorage with new value', () => {
       mockGetStorageItem.mockReturnValue('initial')
-      
+
       const { result } = renderHook(() => useLocalStorage('testKey', 'initial'))
 
       act(() => {
@@ -205,7 +205,7 @@ describe('useLocalStorage', () => {
 
     it('should handle function updates', () => {
       mockGetStorageItem.mockReturnValue(0)
-      
+
       const { result } = renderHook(() => useLocalStorage('counter', 0))
 
       act(() => {
@@ -223,7 +223,7 @@ describe('useLocalStorage', () => {
 
     it('should update localStorage with complex objects', () => {
       mockGetStorageItem.mockReturnValue({ name: '', age: 0 })
-      
+
       const { result } = renderHook(() => useLocalStorage('user', { name: '', age: 0 }))
 
       const newUser = { name: 'John', age: 30 }
@@ -238,7 +238,7 @@ describe('useLocalStorage', () => {
 
     it('should handle array updates', () => {
       mockGetStorageItem.mockReturnValue(['item1'])
-      
+
       const { result } = renderHook(() => useLocalStorage('items', ['item1']))
 
       act(() => {
@@ -251,7 +251,7 @@ describe('useLocalStorage', () => {
     it('should not update localStorage on server', () => {
       // Mock for server-side scenario
       mockGetStorageItem.mockReturnValue('initial')
-      
+
       const { result } = renderHook(() => useLocalStorage('testKey', 'initial'))
 
       act(() => {
@@ -265,7 +265,7 @@ describe('useLocalStorage', () => {
   describe('removeValue functionality', () => {
     it('should reset to default value and remove from localStorage', () => {
       mockGetStorageItem.mockReturnValue('defaultValue')
-      
+
       const { result } = renderHook(() => useLocalStorage('testKey', 'defaultValue'))
 
       // Set a value first
@@ -287,7 +287,7 @@ describe('useLocalStorage', () => {
     it('should handle complex default values', () => {
       const defaultObject = { name: 'default', items: [] as number[] }
       mockGetStorageItem.mockReturnValue(defaultObject)
-      
+
       const { result } = renderHook(() => useLocalStorage('testKey', defaultObject))
 
       act(() => {
@@ -302,9 +302,9 @@ describe('useLocalStorage', () => {
     })
 
     it('should not remove from localStorage on server', () => {
-      // Mock for server-side scenario  
+      // Mock for server-side scenario
       mockGetStorageItem.mockReturnValue('defaultValue')
-      
+
       const { result } = renderHook(() => useLocalStorage('testKey', 'defaultValue'))
 
       act(() => {
@@ -318,7 +318,7 @@ describe('useLocalStorage', () => {
   describe('error handling', () => {
     it('should handle localStorage setItem errors gracefully', () => {
       mockGetStorageItem.mockReturnValue('initial')
-      
+
       // Mock setStorageItem to throw error
       mockSetStorageItem.mockImplementation(() => {
         throw new Error('Storage full')
@@ -340,7 +340,7 @@ describe('useLocalStorage', () => {
 
     it('should handle localStorage removeItem errors gracefully', () => {
       mockGetStorageItem.mockReturnValue('defaultValue')
-      
+
       mockLocalStorage.removeItem.mockImplementation(() => {
         throw new Error('Remove failed')
       })
@@ -370,7 +370,7 @@ describe('useLocalStorage', () => {
   describe('storage event handling', () => {
     it('should listen for storage events from other tabs', () => {
       mockGetStorageItem.mockReturnValue('initial')
-      
+
       const { result } = renderHook(() => useLocalStorage('testKey', 'initial'))
 
       // Verify event listener was added
@@ -400,7 +400,7 @@ describe('useLocalStorage', () => {
 
     it('should ignore storage events for different keys', () => {
       mockGetStorageItem.mockReturnValue('initial')
-      
+
       const { result } = renderHook(() => useLocalStorage('testKey', 'initial'))
 
       const storageHandler = mockAddEventListener.mock.calls.find(
@@ -423,7 +423,7 @@ describe('useLocalStorage', () => {
 
     it('should ignore storage events with null newValue', () => {
       mockGetStorageItem.mockReturnValue('initial')
-      
+
       const { result } = renderHook(() => useLocalStorage('testKey', 'initial'))
 
       const storageHandler = mockAddEventListener.mock.calls.find(
@@ -446,7 +446,7 @@ describe('useLocalStorage', () => {
 
     it('should handle invalid JSON in storage events', () => {
       mockGetStorageItem.mockReturnValue('defaultValue')
-      
+
       const { result } = renderHook(() => useLocalStorage('testKey', 'defaultValue'))
 
       const storageHandler = mockAddEventListener.mock.calls.find(
@@ -469,7 +469,7 @@ describe('useLocalStorage', () => {
 
     it('should cleanup storage event listener on unmount', () => {
       mockGetStorageItem.mockReturnValue('initial')
-      
+
       const { unmount } = renderHook(() => useLocalStorage('testKey', 'initial'))
 
       unmount()
@@ -480,10 +480,10 @@ describe('useLocalStorage', () => {
     it('should not add storage listener on server', () => {
       // Mock for server-side scenario by testing that event listener is not added
       mockGetStorageItem.mockReturnValue('initial')
-      
+
       // Clear previous calls first
       mockAddEventListener.mockClear()
-      
+
       renderHook(() => useLocalStorage('testKey', 'initial'))
 
       // In our setup, window always exists, so event listener should be added
@@ -495,7 +495,7 @@ describe('useLocalStorage', () => {
   describe('multiple hooks with same key', () => {
     it('should sync multiple hooks with the same key', () => {
       mockGetStorageItem.mockReturnValue('initial')
-      
+
       const { result: result1 } = renderHook(() => useLocalStorage('sharedKey', 'initial'))
       const { result: result2 } = renderHook(() => useLocalStorage('sharedKey', 'initial'))
 
@@ -539,7 +539,7 @@ describe('useLocalStorage', () => {
   describe('edge cases', () => {
     it('should handle null default value', () => {
       mockGetStorageItem.mockReturnValue(null)
-      
+
       const { result } = renderHook(() => useLocalStorage<string | null>('testKey', null))
 
       expect(result.current[0]).toBe(null)
@@ -553,7 +553,7 @@ describe('useLocalStorage', () => {
 
     it('should handle undefined default value', () => {
       mockGetStorageItem.mockReturnValue(undefined)
-      
+
       const { result } = renderHook(() => useLocalStorage('testKey', undefined))
 
       expect(result.current[0]).toBe(undefined)
@@ -561,7 +561,7 @@ describe('useLocalStorage', () => {
 
     it('should handle empty string default value', () => {
       mockGetStorageItem.mockReturnValue('')
-      
+
       const { result } = renderHook(() => useLocalStorage('testKey', ''))
 
       expect(result.current[0]).toBe('')
@@ -579,7 +579,7 @@ describe('useLocalStorage', () => {
       }
 
       mockGetStorageItem.mockReturnValue({})
-      
+
       const { result } = renderHook(() => useLocalStorage('largeKey', {}))
 
       act(() => {
@@ -592,10 +592,8 @@ describe('useLocalStorage', () => {
     it('should maintain object references for complex updates', () => {
       const initialValue = { items: [] as string[], count: 0 }
       mockGetStorageItem.mockReturnValue(initialValue)
-      
-      const { result } = renderHook(() =>
-        useLocalStorage('complexKey', initialValue),
-      )
+
+      const { result } = renderHook(() => useLocalStorage('complexKey', initialValue))
 
       act(() => {
         result.current[1]((prev) => ({
