@@ -7,12 +7,26 @@ import type { Testimonial } from '~/features/landing/types'
 // Mock framer-motion
 vi.mock('framer-motion', () => ({
   motion: {
-    div: ({ children, layout, initial, animate, whileInView, transition, variants, ...props }: any) => (
-      <div {...props}>{children}</div>
-    ),
-    section: ({ children, layout, initial, animate, whileInView, transition, variants, ...props }: any) => (
-      <section {...props}>{children}</section>
-    ),
+    div: ({
+      children,
+      layout,
+      initial,
+      animate,
+      whileInView,
+      transition,
+      variants,
+      ...props
+    }: any) => <div {...props}>{children}</div>,
+    section: ({
+      children,
+      layout,
+      initial,
+      animate,
+      whileInView,
+      transition,
+      variants,
+      ...props
+    }: any) => <section {...props}>{children}</section>,
   },
   AnimatePresence: ({ children }: any) => children,
 }))
@@ -35,7 +49,8 @@ const mockTestimonials: Testimonial[] = [
   {
     id: 'testimonial-1',
     userName: '田中 太郎',
-    content: 'メンタルマップ機能のおかげで、読書の効果が3倍になりました。意図的な読書が習慣になり、知識の定着が格段に向上しています。特に3×3構造での整理方法が画期的です。',
+    content:
+      'メンタルマップ機能のおかげで、読書の効果が3倍になりました。意図的な読書が習慣になり、知識の定着が格段に向上しています。特に3×3構造での整理方法が画期的です。',
     author: '田中 太郎',
     role: 'ソフトウェアエンジニア',
     company: 'テック株式会社',
@@ -45,7 +60,8 @@ const mockTestimonials: Testimonial[] = [
   {
     id: 'testimonial-2',
     userName: '佐藤 花子',
-    content: '読書管理機能が素晴らしく、今まで曖昧だった読書の成果が明確に見えるようになりました。統計分析で自分の読書パターンも理解できて、学習効率が大幅にアップ！',
+    content:
+      '読書管理機能が素晴らしく、今まで曖昧だった読書の成果が明確に見えるようになりました。統計分析で自分の読書パターンも理解できて、学習効率が大幅にアップ！',
     author: '佐藤 花子',
     role: 'プロダクトマネージャー',
     company: 'スタートアップ合同会社',
@@ -55,7 +71,8 @@ const mockTestimonials: Testimonial[] = [
   {
     id: 'testimonial-3',
     userName: '山田 次郎',
-    content: '統計分析機能で自分の読書パターンが分析でき、より効率的な学習スケジュールを組めるようになりました。データに基づいた読書習慣の改善ができています。',
+    content:
+      '統計分析機能で自分の読書パターンが分析でき、より効率的な学習スケジュールを組めるようになりました。データに基づいた読書習慣の改善ができています。',
     author: '山田 次郎',
     role: 'データアナリスト',
     company: '分析コンサルティング',
@@ -217,10 +234,10 @@ describe('SocialProofSection', () => {
 
     const testimonialContent = screen.getAllByText(/とても良いアプリです。/)
     expect(testimonialContent.length).toBeGreaterThan(0)
-    
+
     const authorNames = screen.getAllByText('鈴木一郎')
     expect(authorNames.length).toBeGreaterThan(0)
-    
+
     const authorRoles = screen.getAllByText('フリーランス')
     expect(authorRoles.length).toBeGreaterThan(0)
   })
