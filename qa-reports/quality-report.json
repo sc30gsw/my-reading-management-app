@@ -1,0 +1,73 @@
+{
+  "timestamp": "2025-08-15T12:45:57.205Z",
+  "summary": {
+    "passed": false,
+    "totalChecks": 5,
+    "passedChecks": 2,
+    "failedChecks": 3
+  },
+  "details": {
+    "typescript": {
+      "passed": false,
+      "errors": 1,
+      "details": "error TS6053: File '/Users/kakikaito/dev/nextjs-projects/my-reading-management-app/src/features/landing/types/landing.ts' not found.\n  The file is in the program because:\n    Matched by include pattern '**/*.ts' in '/Users/kakikaito/dev/nextjs-projects/my-reading-management-app/tsconfig.json'\n"
+    },
+    "linting": {
+      "lint": {
+        "passed": false,
+        "errors": 0
+      },
+      "format": {
+        "passed": false,
+        "errors": 1
+      }
+    },
+    "accessibility": {
+      "passed": true,
+      "violations": 0,
+      "details": {
+        "violations": [],
+        "passes": 25,
+        "incomplete": 0,
+        "inapplicable": 5
+      }
+    },
+    "security": {
+      "passed": false,
+      "vulnerabilities": 1,
+      "details": "esbuild  <=0.24.2\n  drizzle-kit › esbuild\n  vitest › vite-node › vite › esbuild\n  moderate: esbuild enables any website to send any requests to the development server and read the response - https://github.com/advisories/GHSA-67mh-4wv8-2f99\n\n1 vulnerabilities (1 moderate)\n\nTo update all dependencies to the latest compatible versions:\n  bun update\n\nTo update all dependencies to the latest versions (including breaking changes):\n  bun update --latest\n\n"
+    },
+    "seo": {
+      "passed": true,
+      "score": 100,
+      "details": {
+        "HTML structure": {
+          "passed": true,
+          "score": 100,
+          "issues": []
+        },
+        "Meta tags": {
+          "passed": true,
+          "score": 100,
+          "issues": []
+        },
+        "Open Graph tags": {
+          "passed": true,
+          "score": 100,
+          "issues": []
+        },
+        "Structured data": {
+          "passed": true,
+          "score": 100,
+          "issues": []
+        }
+      }
+    }
+  },
+  "recommendations": [
+    "Fix TypeScript errors before deployment",
+    "Fix linting errors to maintain code quality",
+    "Run \"bun format\" to fix formatting issues",
+    "Update dependencies to fix security vulnerabilities"
+  ]
+}

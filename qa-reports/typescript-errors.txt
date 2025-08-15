@@ -1,0 +1,3 @@
+error TS6053: File '/Users/kakikaito/dev/nextjs-projects/my-reading-management-app/src/features/landing/types/landing.ts' not found.
+  The file is in the program because:
+    Matched by include pattern '**/*.ts' in '/Users/kakikaito/dev/nextjs-projects/my-reading-management-app/tsconfig.json'

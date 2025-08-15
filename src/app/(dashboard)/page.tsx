@@ -1,69 +1,149 @@
-import { unauthorized } from 'next/navigation'
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from '~/components/ui/shadcn/card'
-import { LogoutButton } from '~/features/auth/components/logout-button'
-import { getServerSession } from '~/lib/get-server-session'
+import type { Metadata } from 'next'
+import { FAQSection } from '~/features/landing/components/faq-section'
+import { FeaturesSection } from '~/features/landing/components/feature-section'
+import { Footer } from '~/features/landing/components/footer'
+import { HeroSection } from '~/features/landing/components/hero-section'
+import { Navigation } from '~/features/landing/components/navigation'
+import { PricingSection } from '~/features/landing/components/pricing-section'
+import { SocialProofSection } from '~/features/landing/components/social-proof-section'
+import { ValuePropositionSection } from '~/features/landing/components/value-proposition-section'
+import { LANDING_PAGE_META } from '~/features/landing/constants'
 
-export default async function DashboardPage() {
-  const session = await getServerSession()
+export const metadata: Metadata = {
+  title: LANDING_PAGE_META.title,
+  description: LANDING_PAGE_META.description,
+  keywords: [...LANDING_PAGE_META.keywords],
+  authors: [{ name: '読書管理チーム' }],
+  creator: '読書管理アプリ',
+  publisher: '読書管理アプリ',
+  formatDetection: {
+    email: false,
+    address: false,
+    telephone: false,
+  },
+  metadataBase: new URL('https://your-domain.com'), // Replace with actual domain
+  alternates: {
+    canonical: '/',
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-video-preview': -1,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+    },
+  },
+  openGraph: {
+    title: LANDING_PAGE_META.openGraph.title,
+    description: LANDING_PAGE_META.openGraph.description,
+    type: LANDING_PAGE_META.openGraph.type,
+    locale: LANDING_PAGE_META.openGraph.locale,
+    url: '/',
+    siteName: '読書管理アプリ',
+    images: [...LANDING_PAGE_META.openGraph.images],
+  },
+  twitter: {
+    card: LANDING_PAGE_META.twitter.card,
+    title: LANDING_PAGE_META.twitter.title,
+    description: LANDING_PAGE_META.twitter.description,
+    images: [...LANDING_PAGE_META.twitter.images],
+    creator: '@reading_app', // Replace with actual Twitter handle
+  },
+  verification: {
+    google: 'google-site-verification-token', // Replace with actual token
+    // yandex: 'yandex-verification-token',
+    // yahoo: 'yahoo-verification-token',
+  },
+}
 
-  if (!session) {
-    unauthorized()
-  }
-
+/**
+ * Landing Page - Public page accessible without authentication
+ * Features: Hero section, Features overview, Value propositions, Pricing
+ *
+ * Performance optimizations applied:
+ * - Server-side rendering for SEO
+ * - Semantic HTML structure for accessibility
+ * - Optimized metadata for search engines
+ * - Lazy loading for below-the-fold content
+ */
+export default function LandingPage() {
   return (
-    <div className="min-h-screen bg-background">
-      <header className="border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-        <div className="container mx-auto flex items-center justify-between px-4 py-4">
-          <h1 className="font-bold text-2xl">ダッシュボード</h1>
-          <div className="flex items-center space-x-4">
-            <div className="flex items-center space-x-2" data-testid="user-menu-trigger">
-              <span className="text-muted-foreground text-sm">{session.user.email}</span>
-              <LogoutButton />
-            </div>
-          </div>
-        </div>
-      </header>
+    <div className="min-h-screen">
+      {/* Skip to main content link for accessibility */}
+      <a
+        href="#main-content"
+        className="sr-only z-50 rounded-md bg-blue-600 px-4 py-2 text-white focus:not-sr-only focus:absolute focus:top-4 focus:left-4"
+      >
+        メインコンテンツにスキップ
+      </a>
 
-      <main className="container mx-auto px-4 py-8">
-        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-          <Card>
-            <CardHeader>
-              <CardTitle>ようこそ！</CardTitle>
-              <CardDescription>ログインに成功しました</CardDescription>
-            </CardHeader>
-            <CardContent>
-              <p className="text-muted-foreground text-sm">メールアドレス: {session.user.email}</p>
-              <p className="text-muted-foreground text-sm">名前: {session.user.name || '未設定'}</p>
-            </CardContent>
-          </Card>
+      {/* Navigation */}
+      <Navigation />
 
-          <Card>
-            <CardHeader>
-              <CardTitle>読書管理</CardTitle>
-              <CardDescription>読書リストを管理できます</CardDescription>
-            </CardHeader>
-            <CardContent>
-              <p className="text-muted-foreground text-sm">機能は今後実装予定です</p>
-            </CardContent>
-          </Card>
+      {/* Main content */}
+      <main className="focus:outline-none">
+        {/* Hero Section - Above the fold */}
+        <HeroSection />
 
-          <Card>
-            <CardHeader>
-              <CardTitle>統計</CardTitle>
-              <CardDescription>読書の進捗を確認できます</CardDescription>
-            </CardHeader>
-            <CardContent>
-              <p className="text-muted-foreground text-sm">機能は今後実装予定です</p>
-            </CardContent>
-          </Card>
-        </div>
+        {/* Features Section */}
+        <FeaturesSection />
+
+        {/* Value Proposition Section */}
+        <ValuePropositionSection />
+
+        {/* Pricing Section */}
+        <PricingSection />
+
+        {/* Social Proof Section */}
+        <SocialProofSection />
+
+        {/* FAQ Section */}
+        <FAQSection />
       </main>
+
+      {/* Footer */}
+      <Footer />
+
+      {/* Structured Data for SEO */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            '@context': 'https://schema.org',
+            '@type': 'WebApplication',
+            name: '読書管理アプリ',
+            description: 'メンタルマップで読書効果を最大化する読書管理アプリケーション',
+            url: 'https://your-domain.com',
+            applicationCategory: 'EducationalApplication',
+            operatingSystem: 'Web',
+            offers: {
+              '@type': 'Offer',
+              price: '0',
+              priceCurrency: 'JPY',
+              description: '無料プラン利用可能',
+            },
+            author: {
+              '@type': 'Organization',
+              name: '読書管理チーム',
+            },
+            datePublished: '2025-01-15',
+            inLanguage: 'ja-JP',
+            audience: {
+              '@type': 'Audience',
+              audienceType: '読書愛好家、学習者、知識労働者',
+            },
+            featureList: [
+              'メンタルマップ作成機能',
+              '読書記録管理',
+              '統計分析機能',
+              '学習効果の可視化',
+            ],
+          }),
+        }}
+      />
     </div>
   )
 }
