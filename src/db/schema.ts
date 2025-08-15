@@ -6,7 +6,7 @@ export const users = sqliteTable(
     id: text('id')
       .primaryKey()
       .$defaultFn(() => crypto.randomUUID()),
-    name: text('name').notNull(),
+    name: text('name').notNull().unique(),
     email: text('email').notNull().unique(),
     emailVerified: integer('email_verified', { mode: 'boolean' })
       .$defaultFn(() => !1)
@@ -21,6 +21,9 @@ export const users = sqliteTable(
   },
   (users) => [index('idx_users_email').on(users.email)],
 )
+
+export type User = typeof users.$inferSelect
+export type NewUser = typeof users.$inferInsert
 
 export const sessions = sqliteTable('sessions', {
   id: text('id')
