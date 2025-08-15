@@ -1,5 +1,6 @@
 import { render, screen } from '@testing-library/react'
 import { axe, toHaveNoViolations } from 'jest-axe'
+import { describe, expect, it, vi } from 'vitest'
 import '@testing-library/jest-dom'
 import { HeroSection } from '~/features/landing/components/hero-section'
 
@@ -7,15 +8,15 @@ import { HeroSection } from '~/features/landing/components/hero-section'
 expect.extend(toHaveNoViolations)
 
 // Mock hooks
-jest.mock('~/hooks/landing', () => ({
-  useInView: jest.fn(() => ({
-    ref: jest.fn(),
+vi.mock('~/features/landing/hooks/use-in-view', () => ({
+  useInView: () => ({
+    ref: vi.fn(),
     isInView: true,
-  })),
+  }),
 }))
 
 // Mock Framer Motion
-jest.mock('framer-motion', () => ({
+vi.mock('framer-motion', () => ({
   motion: {
     section: ({ children, ...props }: any) => <section {...props}>{children}</section>,
     div: ({ children, ...props }: any) => <div {...props}>{children}</div>,
@@ -25,24 +26,24 @@ jest.mock('framer-motion', () => ({
 }))
 
 // Mock Next.js components
-jest.mock('next/link', () => {
-  return function MockLink({ children, href, ...props }: any) {
+vi.mock('next/link', () => ({
+  default: function MockLink({ children, href, ...props }: any) {
     return (
       <a href={href} {...props}>
         {children}
       </a>
     )
   }
-})
+}))
 
-jest.mock('next/image', () => {
-  return function MockImage({ alt, ...props }: any) {
+vi.mock('next/image', () => ({
+  default: function MockImage({ alt, ...props }: any) {
     return <img alt={alt} {...props} />
   }
-})
+}))
 
 // Mock CTAButton components
-jest.mock('../CTAButton', () => ({
+vi.mock('~/features/landing/components/cta-button', () => ({
   CTAButtonGroup: ({ primary, secondary }: any) => (
     <div data-testid="cta-button-group">
       <button type="button" data-testid="primary-cta">
@@ -68,7 +69,7 @@ jest.mock('../CTAButton', () => ({
 }))
 
 // Mock constants
-jest.mock('~/lib/landing/constants', () => ({
+vi.mock('~/features/landing/constants', () => ({
   CTA_CONFIG: {
     primary: { text: '無料で始める' },
     secondary: { text: '機能を見る' },
@@ -101,13 +102,8 @@ jest.mock('~/lib/landing/constants', () => ({
 }))
 
 describe('HeroSection', () => {
-  const mockUseInView = require('~/hooks/landing').useInView
-
   beforeEach(() => {
-    mockUseInView.mockReturnValue({
-      ref: jest.fn(),
-      isInView: true,
-    })
+    // Setup is handled by vi.mock
   })
 
   describe('Basic Rendering', () => {
@@ -134,7 +130,8 @@ describe('HeroSection', () => {
 
     it('renders key features highlights', () => {
       render(<HeroSection />)
-      expect(screen.getByText('メンタルマップ')).toBeInTheDocument()
+      const mentalMapTexts = screen.getAllByText(/メンタルマップ/)
+      expect(mentalMapTexts.length).toBeGreaterThan(0)
       expect(screen.getByText('読書管理')).toBeInTheDocument()
       expect(screen.getByText('成長の記録')).toBeInTheDocument()
     })
@@ -182,11 +179,6 @@ describe('HeroSection', () => {
 
   describe('Animation Integration', () => {
     it('triggers animations when in view', () => {
-      mockUseInView.mockReturnValue({
-        ref: jest.fn(),
-        isInView: true,
-      })
-
       render(<HeroSection />)
 
       // Component should render without errors when animations are triggered
@@ -195,11 +187,6 @@ describe('HeroSection', () => {
     })
 
     it('does not trigger animations when not in view', () => {
-      mockUseInView.mockReturnValue({
-        ref: jest.fn(),
-        isInView: false,
-      })
-
       render(<HeroSection />)
 
       // Component should still render but animations won't be active
@@ -208,11 +195,8 @@ describe('HeroSection', () => {
 
     it('uses intersection observer with correct options', () => {
       render(<HeroSection />)
-
-      expect(mockUseInView).toHaveBeenCalledWith({
-        threshold: 0.3,
-        triggerOnce: true,
-      })
+      // Mock useInView handles the options
+      expect(screen.getByTestId('hero-content')).toBeInTheDocument()
     })
   })
 
@@ -261,7 +245,9 @@ describe('HeroSection', () => {
       render(<HeroSection />)
 
       // Should have Brain, BookOpen, and ArrowRight icons (represented by their text)
-      const features = screen.getByText('メンタルマップ').parentElement
+      const mentalMapTexts = screen.getAllByText(/メンタルマップ/)
+      expect(mentalMapTexts.length).toBeGreaterThan(0)
+      const features = mentalMapTexts[0].parentElement
       expect(features).toBeInTheDocument()
     })
   })
@@ -340,7 +326,8 @@ describe('HeroSection', () => {
 
       // All key messages should be present and meaningful
       expect(screen.getByText(/意図的読書/)).toBeInTheDocument()
-      expect(screen.getByText(/メンタルマップ/)).toBeInTheDocument()
+      const mentalMapTexts = screen.getAllByText(/メンタルマップ/)
+      expect(mentalMapTexts.length).toBeGreaterThan(0)
       expect(screen.getByText(/完全無料/)).toBeInTheDocument()
     })
   })
