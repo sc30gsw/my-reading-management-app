@@ -6,18 +6,33 @@ import { CTAButton } from '~/features/landing/components/cta-button'
 // Mock framer-motion
 vi.mock('framer-motion', () => ({
   motion: {
-    button: ({ children, ...props }: any) => <button {...props}>{children}</button>,
-    div: ({ children, ...props }: any) => <div {...props}>{children}</div>,
+    button: ({ children, whileHover, whileTap, whileInView, initial, animate, transition, ...props }: any) => (
+      <button {...props}>{children}</button>
+    ),
+    div: ({ children, whileHover, whileTap, whileInView, initial, animate, transition, ...props }: any) => (
+      <div {...props}>{children}</div>
+    ),
   },
 }))
 
 // Mock Next.js Link
 vi.mock('next/link', () => ({
-  default: ({ children, href, ...props }: any) => (
-    <a href={href} {...props}>
-      {children}
-    </a>
-  ),
+  default: ({ children, href, target, rel, external, 'aria-label': ariaLabel, 'aria-describedby': ariaDescribedby, ...props }: any) => {
+    const linkProps: any = { href, ...props }
+    if (external) {
+      linkProps.target = '_blank'
+      linkProps.rel = 'noopener noreferrer'
+    }
+    if (ariaLabel) {
+      linkProps['aria-label'] = ariaLabel
+    }
+    if (ariaDescribedby) {
+      linkProps['aria-describedby'] = ariaDescribedby
+    }
+    // Remove boolean props that shouldn't be passed to DOM
+    delete linkProps.external
+    return <a {...linkProps}>{children}</a>
+  },
 }))
 
 describe('CTAButton', () => {
@@ -71,8 +86,9 @@ describe('CTAButton', () => {
       </CTAButton>,
     )
 
-    const button = screen.getByRole('link', { name: '無効ボタン' })
+    const button = screen.getByRole('button', { name: '無効ボタン' })
     expect(button).toBeInTheDocument()
+    expect(button).toBeDisabled()
   })
 
   it('ローディング状態が表示される', () => {
@@ -82,8 +98,9 @@ describe('CTAButton', () => {
       </CTAButton>,
     )
 
-    const button = screen.getByRole('link', { name: '読み込み中' })
+    const button = screen.getByRole('button', { name: '読み込み中' })
     expect(button).toBeInTheDocument()
+    expect(button).toBeDisabled()
   })
 
   it('アイコンが表示される', () => {
@@ -109,7 +126,9 @@ describe('CTAButton', () => {
   })
 
   it('クリックイベントが正しく動作する', async () => {
-    const handleClick = vi.fn()
+    const handleClick = vi.fn((e) => {
+      e?.preventDefault?.() // ナビゲーションを防ぐ
+    })
     render(
       <CTAButton href="/register" onClick={handleClick}>
         クリックテスト
@@ -117,6 +136,8 @@ describe('CTAButton', () => {
     )
 
     const button = screen.getByRole('link', { name: 'クリックテスト' })
+    // Force preventDefault to avoid JSDOM navigation error
+    button.addEventListener('click', (e) => e.preventDefault())
     await user.click(button)
 
     expect(handleClick).toHaveBeenCalledTimes(1)

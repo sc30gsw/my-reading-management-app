@@ -17,13 +17,17 @@ vi.mock('lucide-react', () => ({
   BookOpen: () => <div data-testid="book-open-icon">BookOpen</div>,
   Target: () => <div data-testid="target-icon">Target</div>,
   TrendingUp: () => <div data-testid="trending-up-icon">TrendingUp</div>,
+  Brain: () => <div data-testid="brain-icon">Brain</div>,
+  BarChart3: () => <div data-testid="bar-chart-icon">BarChart3</div>,
+  Network: () => <div data-testid="network-icon">Network</div>,
+  BookMarked: () => <div data-testid="book-marked-icon">BookMarked</div>,
 }))
 
 const mockFeature: Feature = {
   id: '1',
   title: '読書記録管理',
   description: '読んだ本の記録を簡単に管理できます。進捗状況や読書時間も追跡可能です。',
-  icon: 'BookOpen',
+  icon: 'book-open',
   highlighted: false,
   category: 'reading',
 }
@@ -46,14 +50,14 @@ describe('FeatureCard', () => {
   })
 
   it('異なるアイコンが正しく表示される', () => {
-    const featureWithTargetIcon = { ...mockFeature, icon: 'Target' as const }
-    render(<FeatureCard feature={featureWithTargetIcon} />)
+    const featureWithAnalyticsIcon = { ...mockFeature, icon: 'analytics' as const }
+    render(<FeatureCard feature={featureWithAnalyticsIcon} />)
 
-    expect(screen.getByTestId('target-icon')).toBeInTheDocument()
+    expect(screen.getByTestId('bar-chart-icon')).toBeInTheDocument()
   })
 
   it('TrendingUpアイコンが正しく表示される', () => {
-    const featureWithTrendingUpIcon = { ...mockFeature, icon: 'TrendingUp' as const }
+    const featureWithTrendingUpIcon = { ...mockFeature, icon: 'trending-up' as const }
     render(<FeatureCard feature={featureWithTrendingUpIcon} />)
 
     expect(screen.getByTestId('trending-up-icon')).toBeInTheDocument()
@@ -96,7 +100,7 @@ describe('FeatureCard', () => {
 
   it('複数の機能カードが独立して動作する', () => {
     const feature1 = { ...mockFeature, id: '1', title: '機能1' }
-    const feature2 = { ...mockFeature, id: '2', title: '機能2', icon: 'Target' as const }
+    const feature2 = { ...mockFeature, id: '2', title: '機能2', icon: 'analytics' as const }
 
     render(
       <div>
@@ -108,7 +112,7 @@ describe('FeatureCard', () => {
     expect(screen.getByText('機能1')).toBeInTheDocument()
     expect(screen.getByText('機能2')).toBeInTheDocument()
     expect(screen.getByTestId('book-open-icon')).toBeInTheDocument()
-    expect(screen.getByTestId('target-icon')).toBeInTheDocument()
+    expect(screen.getByTestId('bar-chart-icon')).toBeInTheDocument()
   })
 
   it('data-testidが正しく設定される', () => {

@@ -5,7 +5,9 @@ import { MotionWrapper } from '~/features/landing/components/motion-wrapper'
 // Mock framer-motion
 vi.mock('framer-motion', () => ({
   motion: {
-    div: ({ children, ...props }: any) => <div {...props}>{children}</div>,
+    div: ({ children, triggerOnce, initial, animate, whileInView, transition, viewport, layout, staggerChildren, onAnimationComplete, ...props }: any) => (
+      <div {...props}>{children}</div>
+    ),
   },
   AnimatePresence: ({ children }: any) => children,
 }))
