@@ -12,7 +12,7 @@
 各設計コンポーネントが特定の要件に対応:
 
 - **Better Auth Config & Setup** → REQ-4: セッション管理機能、REQ-5: セキュリティ機能
-- **Registration/Login Pages** → REQ-1: ユーザー登録機能、REQ-2: ログイン/ログアウト機能
+- **Registration/sign-in Pages** → REQ-1: ユーザー登録機能、REQ-2: ログイン/ログアウト機能
 - **Profile Management Components** → REQ-3: プロフィール管理機能
 - **Authentication Middleware** → REQ-4: セッション管理機能、REQ-6: API統合
 - **User Schema & API** → REQ-6: データモデル・API統合
@@ -142,7 +142,7 @@ sequenceDiagram
         ProtectedPage-->>User: コンテンツ表示
     else セッション無効/期限切れ
         BetterAuth-->>Middleware: 未認証
-        Middleware-->>ProtectedPage: リダイレクト('/login')
+        Middleware-->>ProtectedPage: リダイレクト('/sign-in')
         ProtectedPage-->>User: ログインページ
     end
 ```
@@ -731,9 +731,9 @@ describe('Validation Schemas', () => {
 ```typescript
 // API エンドポイント統合テスト
 describe('Auth API Integration', () => {
-  test('POST /api/auth/sign-up は新規ユーザーを作成する', async () => {
+  test('POST /api/sign-up は新規ユーザーを作成する', async () => {
     const response = await request(app)
-      .post('/api/auth/sign-up')
+      .post('/api/sign-up')
       .send({
         email: 'newuser@example.com',
         password: 'securepassword',
@@ -757,7 +757,7 @@ describe('Auth API Integration', () => {
 // 認証フロー E2E テスト
 test('ユーザー登録からログインまでの完全フロー', async ({ page }) => {
   // ユーザー登録
-  await page.goto('/register');
+  await page.goto('/sign-up');
   await page.fill('[name="email"]', 'e2etest@example.com');
   await page.fill('[name="password"]', 'password123');
   await page.fill('[name="confirmPassword"]', 'password123');
@@ -769,7 +769,7 @@ test('ユーザー登録からログインまでの完全フロー', async ({ pa
   
   // ログアウト
   await page.click('[data-testid="logout-button"]');
-  await expect(page).toHaveURL('/login');
+  await expect(page).toHaveURL('/sign-in');
   
   // ログイン
   await page.fill('[name="email"]', 'e2etest@example.com');
@@ -788,7 +788,7 @@ test('セッション期限切れ後のリダイレクト', async ({ page }) => 
   });
   
   await page.goto('/profile');
-  await expect(page).toHaveURL('/login');
+  await expect(page).toHaveURL('/sign-in');
 });
 ```
 
@@ -800,7 +800,7 @@ describe('Security Tests', () => {
   test('SQL インジェクション攻撃への耐性', async () => {
     const maliciousInput = "'; DROP TABLE users; --";
     const response = await request(app)
-      .post('/api/auth/sign-in')
+      .post('/api/sign-in')
       .send({
         email: maliciousInput,
         password: 'password'

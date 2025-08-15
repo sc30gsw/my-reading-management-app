@@ -99,7 +99,7 @@ test.describe('Landing Page Conversion Flow', () => {
     await heroCtaButton.click();
     
     // Assert: 認証ページ遷移確認
-    await expect(page).toHaveURL('/auth/register');
+    await expect(page).toHaveURL('/sign-up');
     await expect(page.getByText('アカウント作成')).toBeVisible();
     
     // Act: ユーザー登録
@@ -124,7 +124,7 @@ test.describe('Landing Page Conversion Flow', () => {
     await navCta.click();
     
     // Assert: 認証ページ遷移確認
-    await expect(page).toHaveURL('/auth/register');
+    await expect(page).toHaveURL('/sign-up');
   });
   
   test('sticky navigation behavior', async ({ page }) => {
@@ -465,7 +465,7 @@ test.describe('Cross-Browser Compatibility', () => {
       
       // Act & Assert: CTA機能確認
       await page.getByTestId('cta-primary').click();
-      await expect(page).toHaveURL('/auth/register');
+      await expect(page).toHaveURL('/sign-up');
     });
   });
 });
@@ -487,7 +487,7 @@ test.describe('Error Handling E2E', () => {
     
     // Act & Assert: フォーム送信確認（Progressive Enhancement）
     const ctaLink = page.getByTestId('cta-primary');
-    await expect(ctaLink).toHaveAttribute('href', '/auth/register');
+    await expect(ctaLink).toHaveAttribute('href', '/sign-up');
   });
   
   test('network failure resilience', async ({ page }) => {

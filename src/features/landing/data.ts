@@ -207,7 +207,7 @@ export const pricingPlans: PricingPlan[] = [
     limitations: ['読書記録は月5冊まで', '高度な統計機能は利用不可'],
     highlighted: true,
     ctaText: '無料で始める',
-    ctaUrl: '/auth/register',
+    ctaUrl: '/sign-up',
   },
   {
     id: 'premium',
@@ -226,7 +226,7 @@ export const pricingPlans: PricingPlan[] = [
     ],
     highlighted: false,
     ctaText: 'プレミアムを試す',
-    ctaUrl: '/auth/register?plan=premium',
+    ctaUrl: '/sign-up?plan=premium',
   },
   {
     id: 'team',

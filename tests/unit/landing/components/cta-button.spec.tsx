@@ -62,16 +62,16 @@ describe('CTAButton', () => {
   const user = userEvent.setup()
 
   it('CTAボタンが正しくレンダリングされる', () => {
-    render(<CTAButton href="/register">無料で始める</CTAButton>)
+    render(<CTAButton href="/sign-up">無料で始める</CTAButton>)
 
     const button = screen.getByRole('link', { name: '無料で始める' })
     expect(button).toBeInTheDocument()
-    expect(button).toHaveAttribute('href', '/register')
+    expect(button).toHaveAttribute('href', '/sign-up')
   })
 
   it('プライマリスタイルが適用される', () => {
     render(
-      <CTAButton href="/register" variant="primary">
+      <CTAButton href="/sign-up" variant="primary">
         登録
       </CTAButton>,
     )
@@ -82,7 +82,7 @@ describe('CTAButton', () => {
 
   it('セカンダリスタイルが適用される', () => {
     render(
-      <CTAButton href="/login" variant="secondary">
+      <CTAButton href="/sign-in" variant="secondary">
         ログイン
       </CTAButton>,
     )
@@ -93,7 +93,7 @@ describe('CTAButton', () => {
 
   it('サイズが正しく適用される', () => {
     render(
-      <CTAButton href="/register" size="large">
+      <CTAButton href="/sign-up" size="large">
         大きなボタン
       </CTAButton>,
     )
@@ -104,7 +104,7 @@ describe('CTAButton', () => {
 
   it('無効状態が正しく動作する', () => {
     render(
-      <CTAButton href="/register" disabled>
+      <CTAButton href="/sign-up" disabled>
         無効ボタン
       </CTAButton>,
     )
@@ -116,7 +116,7 @@ describe('CTAButton', () => {
 
   it('ローディング状態が表示される', () => {
     render(
-      <CTAButton href="/register" loading>
+      <CTAButton href="/sign-up" loading>
         読み込み中
       </CTAButton>,
     )
@@ -128,7 +128,7 @@ describe('CTAButton', () => {
 
   it('アイコンが表示される', () => {
     render(
-      <CTAButton href="/register" icon="ArrowRight">
+      <CTAButton href="/sign-up" icon="ArrowRight">
         次へ
       </CTAButton>,
     )
@@ -139,7 +139,7 @@ describe('CTAButton', () => {
 
   it('全幅設定が適用される', () => {
     render(
-      <CTAButton href="/register" fullWidth>
+      <CTAButton href="/sign-up" fullWidth>
         全幅ボタン
       </CTAButton>,
     )
@@ -153,7 +153,7 @@ describe('CTAButton', () => {
       // クリックハンドラー
     })
     render(
-      <CTAButton href="/register" onClick={handleClick}>
+      <CTAButton href="/sign-up" onClick={handleClick}>
         クリックテスト
       </CTAButton>,
     )
@@ -180,7 +180,7 @@ describe('CTAButton', () => {
 
   it('カスタムclassNameが適用される', () => {
     render(
-      <CTAButton href="/register" className="custom-class">
+      <CTAButton href="/sign-up" className="custom-class">
         カスタム
       </CTAButton>,
     )
@@ -191,7 +191,7 @@ describe('CTAButton', () => {
 
   it('アクセシビリティ属性が正しく設定される', () => {
     render(
-      <CTAButton href="/register" aria-label="アカウント登録" aria-describedby="register-help">
+      <CTAButton href="/sign-up" aria-label="アカウント登録" aria-describedby="register-help">
         登録
       </CTAButton>,
     )
@@ -202,7 +202,7 @@ describe('CTAButton', () => {
 
   it('data属性が正しく設定される', () => {
     render(
-      <CTAButton href="/register" data-testid="register-button">
+      <CTAButton href="/sign-up" data-testid="register-button">
         登録
       </CTAButton>,
     )

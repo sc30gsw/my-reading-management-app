@@ -31,7 +31,7 @@ export function FeatureCard({ feature, index = 0, animated = true, className }: 
   return (
     <motion.div
       data-testid={`feature-card-${feature.id}`}
-      data-highlighted={isHighlighted.toString()}
+      data-highlighted={isHighlighted?.toString()}
       className={cn(
         'group relative rounded-2xl p-6 transition-all duration-300',
         'border border-slate-200 bg-white',

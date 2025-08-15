@@ -320,7 +320,7 @@ describe('HeroSection', () => {
     render(<HeroSection />);
     const ctaButton = screen.getByText('無料で始める');
     
-    expect(ctaButton).toHaveAttribute('href', '/auth/register');
+    expect(ctaButton).toHaveAttribute('href', '/sign-up');
   });
 });
 ```
@@ -342,7 +342,7 @@ test('complete landing page conversion flow', async ({ page }) => {
   await page.getByText('無料で始める').click();
   
   // 認証ページ遷移確認
-  await expect(page).toHaveURL('/auth/register');
+  await expect(page).toHaveURL('/sign-up');
 });
 ```
 

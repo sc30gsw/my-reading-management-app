@@ -242,7 +242,7 @@ describe('LoginForm navigation', () => {
     // Assert
     const registerLink = screen.getByText(/アカウント作成|新規登録/i)
     expect(registerLink).toBeInTheDocument()
-    expect(registerLink.closest('a')).toHaveAttribute('href', '/register')
+    expect(registerLink.closest('a')).toHaveAttribute('href', '/sign-up')
   })
 
   test('パスワードリセットリンクが表示される', () => {

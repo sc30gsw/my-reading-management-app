@@ -272,7 +272,7 @@ export const apiHandlers = [
   }),
 
   // 認証API（テスト用）
-  rest.post('/api/auth/register', (req, res, ctx) => {
+  rest.post('/api/sign-up', (req, res, ctx) => {
     return res(
       ctx.status(200),
       ctx.json({ 

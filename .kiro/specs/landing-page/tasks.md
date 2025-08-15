@@ -102,7 +102,7 @@
   - _Requirements: 2.4, 9.3, 9.4_
 
 - [ ] 14. CTAボタンと認証フロー統合
-  - 全CTAボタンのBetter Auth認証フロー（/auth/register）へのリダイレクト実装
+  - 全CTAボタンのBetter Auth認証フロー（/sign-up）へのリダイレクト実装
   - Loading状態とエラーハンドリングの実装
   - 複数CTA位置（ヒーロー、ナビゲーション、セクション末尾）での一貫したデザイン
   - フォーム送信のProgressive Enhancement（JavaScript無効時の対応）

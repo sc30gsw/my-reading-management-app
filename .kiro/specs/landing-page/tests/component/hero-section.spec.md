@@ -32,7 +32,7 @@ export function HeroSection({ className, variant = 'default' }: HeroSectionProps
         <h1 data-testid="hero-title">意図的読書で学習効果を最大化</h1>
         <p data-testid="hero-description">...</p>
         <div data-testid="hero-cta-group">
-          <Button data-testid="cta-primary" href="/auth/register">
+          <Button data-testid="cta-primary" href="/sign-up">
             無料で始める
           </Button>
         </div>
@@ -147,7 +147,7 @@ describe('HeroSection - CTAボタン表示', () => {
     
     // Assert
     const ctaButton = screen.getByTestId('cta-primary');
-    expect(ctaButton).toHaveAttribute('href', '/auth/register');
+    expect(ctaButton).toHaveAttribute('href', '/sign-up');
   });
 });
 ```
@@ -173,7 +173,7 @@ describe('HeroSection - アクセシビリティ', () => {
     // Assert
     const ctaButton = screen.getByRole('link', { name: '無料で始める' });
     expect(ctaButton).toBeInTheDocument();
-    expect(ctaButton).toHaveAttribute('href', '/auth/register');
+    expect(ctaButton).toHaveAttribute('href', '/sign-up');
   });
   
   it('should have sufficient color contrast', async () => {

@@ -101,13 +101,13 @@ function MobileMenu({ isOpen, onClose }: { isOpen: boolean; onClose: () => void 
               {/* CTA Buttons */}
               <div className="space-y-3 border-slate-200 border-t p-6">
                 <Button asChild variant="outline" className="w-full">
-                  <Link href="/login" onClick={handleLinkClick}>
+                  <Link href="/sign-in" onClick={handleLinkClick}>
                     <LogIn className="mr-2 h-4 w-4" />
                     ログイン
                   </Link>
                 </Button>
                 <Button asChild className="w-full">
-                  <Link href="/register" onClick={handleLinkClick}>
+                  <Link href="/sign-up" onClick={handleLinkClick}>
                     <UserPlus className="mr-2 h-4 w-4" />
                     無料で始める
                   </Link>

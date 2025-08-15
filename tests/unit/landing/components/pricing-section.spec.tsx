@@ -37,7 +37,7 @@ const mockPricingPlans: PricingPlan[] = [
     features: ['月5冊までの読書記録', '基本的なメンタルマップ機能', '統計分析（基本）'],
     limitations: ['読書記録は月5冊まで', '高度な統計機能は利用不可'],
     ctaText: '無料で始める',
-    ctaUrl: '/auth/register',
+    ctaUrl: '/sign-up',
     highlighted: true,
   },
   {
@@ -46,7 +46,7 @@ const mockPricingPlans: PricingPlan[] = [
     price: { monthly: 980, yearly: 9800 },
     features: ['無制限の読書記録', '高度なメンタルマップ機能', '詳細な統計分析'],
     ctaText: 'プレミアムを試す',
-    ctaUrl: '/auth/register?plan=premium',
+    ctaUrl: '/sign-up?plan=premium',
     highlighted: false,
   },
 ]
@@ -145,8 +145,8 @@ describe('PricingSection', () => {
     const premiumButton = screen.getByText('プレミアムを試す').closest('a')
     const teamButton = screen.getByText('チームプランを試す').closest('a')
 
-    expect(freeButton).toHaveAttribute('href', '/auth/register')
-    expect(premiumButton).toHaveAttribute('href', '/auth/register?plan=premium')
+    expect(freeButton).toHaveAttribute('href', '/sign-up')
+    expect(premiumButton).toHaveAttribute('href', '/sign-up?plan=premium')
     expect(teamButton).toHaveAttribute('href', '/contact?plan=team')
   })
 

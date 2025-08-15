@@ -26,7 +26,7 @@ test('新規ユーザー登録が完全に動作する', async ({ page }) => {
   const password = 'password123'
 
   // Act - 登録ページへ移動
-  await page.goto('/register')
+  await page.goto('/sign-up')
 
   // Assert - 登録ページが表示される
   await expect(page.getByRole('heading', { name: /登録|アカウント作成/i })).toBeVisible()
@@ -57,7 +57,7 @@ test('既存メールで登録エラーが表示される', async ({ page }) => 
   // Pre-condition: 既存ユーザーを作成（別のテストまたはセットアップで作成済み想定）
 
   // Act
-  await page.goto('/register')
+  await page.goto('/sign-up')
   await page.getByLabel(/メールアドレス/i).fill(existingEmail)
   await page.getByLabel(/パスワード/i).fill('password123')
   await page.getByLabel(/ユーザー名|名前/i).fill('Test User')
@@ -65,7 +65,7 @@ test('既存メールで登録エラーが表示される', async ({ page }) => 
 
   // Assert
   await expect(page.getByText('このメールアドレスは既に使用されています')).toBeVisible()
-  await expect(page).toHaveURL('/register') // ページに留まる
+  await expect(page).toHaveURL('/sign-up') // ページに留まる
 })
 ```
 
@@ -82,7 +82,7 @@ test('正しい認証情報でログインできる', async ({ page }) => {
   // Pre-condition: テストユーザーが存在する
 
   // Act
-  await page.goto('/login')
+  await page.goto('/sign-in')
   await page.getByLabel(/メールアドレス/i).fill(userEmail)
   await page.getByLabel(/パスワード/i).fill(password)
   await page.getByRole('button', { name: /ログイン|サインイン/i }).click()
@@ -97,14 +97,14 @@ test('正しい認証情報でログインできる', async ({ page }) => {
 ```typescript
 test('間違った認証情報でエラーが表示される', async ({ page }) => {
   // Act
-  await page.goto('/login')
+  await page.goto('/sign-in')
   await page.getByLabel(/メールアドレス/i).fill('wrong@example.com')
   await page.getByLabel(/パスワード/i).fill('wrongpassword')
   await page.getByRole('button', { name: /ログイン|サインイン/i }).click()
 
   // Assert
   await expect(page.getByText(/メールアドレスまたはパスワードが正しくありません|認証に失敗/i)).toBeVisible()
-  await expect(page).toHaveURL('/login')
+  await expect(page).toHaveURL('/sign-in')
 })
 ```
 
@@ -115,7 +115,7 @@ test('間違った認証情報でエラーが表示される', async ({ page }) 
 ```typescript
 test('ログアウトが正常に動作する', async ({ page }) => {
   // Arrange - ログイン状態を作成
-  await page.goto('/login')
+  await page.goto('/sign-in')
   await page.getByLabel(/メールアドレス/i).fill('testuser@example.com')
   await page.getByLabel(/パスワード/i).fill('password123')
   await page.getByRole('button', { name: /ログイン|サインイン/i }).click()
@@ -126,12 +126,12 @@ test('ログアウトが正常に動作する', async ({ page }) => {
   await page.getByRole('button', { name: /ログアウト/i }).click()
 
   // Assert
-  await expect(page).toHaveURL('/login')
+  await expect(page).toHaveURL('/sign-in')
   await expect(page.getByText(/ログイン/i)).toBeVisible()
 
   // Assert - 保護されたページにアクセスできない
   await page.goto('/dashboard')
-  await expect(page).toHaveURL('/login') // リダイレクトされる
+  await expect(page).toHaveURL('/sign-in') // リダイレクトされる
 })
 ```
 
@@ -142,7 +142,7 @@ test('ログアウトが正常に動作する', async ({ page }) => {
 ```typescript
 test('ログイン状態がページリロード後も維持される', async ({ page }) => {
   // Arrange - ログイン
-  await page.goto('/login')
+  await page.goto('/sign-in')
   await page.getByLabel(/メールアドレス/i).fill('testuser@example.com')
   await page.getByLabel(/パスワード/i).fill('password123')
   await page.getByRole('button', { name: /ログイン|サインイン/i }).click()
@@ -162,7 +162,7 @@ test('ログイン状態がページリロード後も維持される', async ({
 ```typescript
 test('セッション期限切れ後にリダイレクトされる', async ({ page, context }) => {
   // Arrange - ログイン
-  await page.goto('/login')
+  await page.goto('/sign-in')
   await page.getByLabel(/メールアドレス/i).fill('testuser@example.com')
   await page.getByLabel(/パスワード/i).fill('password123')
   await page.getByRole('button', { name: /ログイン|サインイン/i }).click()
@@ -176,7 +176,7 @@ test('セッション期限切れ後にリダイレクトされる', async ({ pa
   await page.goto('/dashboard')
 
   // Assert - ログインページにリダイレクト
-  await expect(page).toHaveURL('/login')
+  await expect(page).toHaveURL('/sign-in')
 })
 ```
 
@@ -192,13 +192,13 @@ test('未認証ユーザーが保護されたページにアクセスできな�
   await page.goto('/dashboard')
 
   // Assert - ログインページにリダイレクト
-  await expect(page).toHaveURL('/login')
+  await expect(page).toHaveURL('/sign-in')
 
   // Act - プロフィールページにアクセス
   await page.goto('/profile')
 
   // Assert - ログインページにリダイレクト
-  await expect(page).toHaveURL('/login')
+  await expect(page).toHaveURL('/sign-in')
 })
 ```
 
@@ -206,7 +206,7 @@ test('未認証ユーザーが保護されたページにアクセスできな�
 ```typescript
 test('認証済みユーザーが保護されたページにアクセスできる', async ({ page }) => {
   // Arrange - ログイン
-  await page.goto('/login')
+  await page.goto('/sign-in')
   await page.getByLabel(/メールアドレス/i).fill('testuser@example.com')
   await page.getByLabel(/パスワード/i).fill('password123')
   await page.getByRole('button', { name: /ログイン|サインイン/i }).click()
@@ -229,13 +229,13 @@ test('認証済みユーザーが保護されたページにアクセスでき�
 ```typescript
 test('認証関連ページ間のナビゲーションが正常に動作する', async ({ page }) => {
   // Act - 登録ページからログインページへ
-  await page.goto('/register')
+  await page.goto('/sign-up')
   await page.getByText(/ログイン|既にアカウントをお持ちの方/i).click()
-  await expect(page).toHaveURL('/login')
+  await expect(page).toHaveURL('/sign-in')
 
   // Act - ログインページから登録ページへ
   await page.getByText(/アカウント作成|新規登録/i).click()
-  await expect(page).toHaveURL('/register')
+  await expect(page).toHaveURL('/sign-up')
 })
 ```
 
@@ -249,7 +249,7 @@ test('ネットワークエラー時に適切なエラーメッセージが表�
   await page.route('**/api/auth/**', route => route.abort())
 
   // Act
-  await page.goto('/login')
+  await page.goto('/sign-in')
   await page.getByLabel(/メールアドレス/i).fill('test@example.com')
   await page.getByLabel(/パスワード/i).fill('password123')
   await page.getByRole('button', { name: /ログイン|サインイン/i }).click()
@@ -269,7 +269,7 @@ test('モバイルデバイスで認証フローが正常に動作する', async
   await page.setViewportSize({ width: 375, height: 667 }) // iPhone SE
 
   // Act & Assert - 登録フロー
-  await page.goto('/register')
+  await page.goto('/sign-up')
   await expect(page.getByRole('heading', { name: /登録|アカウント作成/i })).toBeVisible()
 
   // フォームが適切に表示される

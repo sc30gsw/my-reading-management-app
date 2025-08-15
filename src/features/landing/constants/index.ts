@@ -50,12 +50,12 @@ export const LANDING_PAGE_META = {
 export const CTA_CONFIG = {
   primary: {
     text: '無料で始める',
-    url: '/auth/register',
+    url: '/sign-up',
     variant: 'default' as const,
   },
   secondary: {
     text: 'ログイン',
-    url: '/auth/login',
+    url: '/sign-in',
     variant: 'outline' as const,
   },
   pricing: {
