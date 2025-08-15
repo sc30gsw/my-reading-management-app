@@ -33,13 +33,13 @@ vi.mock('next/link', () => ({
         {children}
       </a>
     )
-  }
+  },
 }))
 
 vi.mock('next/image', () => ({
   default: function MockImage({ alt, ...props }: any) {
     return <img alt={alt} {...props} />
-  }
+  },
 }))
 
 // Mock CTAButton components

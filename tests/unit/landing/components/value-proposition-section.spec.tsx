@@ -162,7 +162,7 @@ describe('ValuePropositionSection', () => {
 
     const beforeSection = screen.getByTestId('before-section')
     const afterSection = screen.getByTestId('after-section')
-    
+
     expect(beforeSection).toBeInTheDocument()
     expect(afterSection).toBeInTheDocument()
   })

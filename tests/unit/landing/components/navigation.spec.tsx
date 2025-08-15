@@ -29,11 +29,61 @@ const updateScrollState = (scrollY: number, direction: 'up' | 'down') => {
 // Mock Framer Motion
 vi.mock('framer-motion', () => ({
   motion: {
-    header: ({ children, whileHover, whileTap, whileInView, initial, animate, transition, viewport, ...props }: any) => <header {...props}>{children}</header>,
-    div: ({ children, whileHover, whileTap, whileInView, initial, animate, transition, viewport, ...props }: any) => <div {...props}>{children}</div>,
-    button: ({ children, whileHover, whileTap, whileInView, initial, animate, transition, viewport, ...props }: any) => <button {...props}>{children}</button>,
-    li: ({ children, whileHover, whileTap, whileInView, initial, animate, transition, viewport, ...props }: any) => <li {...props}>{children}</li>,
-    a: ({ children, whileHover, whileTap, whileInView, initial, animate, transition, viewport, ...props }: any) => <a {...props}>{children}</a>,
+    header: ({
+      children,
+      whileHover,
+      whileTap,
+      whileInView,
+      initial,
+      animate,
+      transition,
+      viewport,
+      ...props
+    }: any) => <header {...props}>{children}</header>,
+    div: ({
+      children,
+      whileHover,
+      whileTap,
+      whileInView,
+      initial,
+      animate,
+      transition,
+      viewport,
+      ...props
+    }: any) => <div {...props}>{children}</div>,
+    button: ({
+      children,
+      whileHover,
+      whileTap,
+      whileInView,
+      initial,
+      animate,
+      transition,
+      viewport,
+      ...props
+    }: any) => <button {...props}>{children}</button>,
+    li: ({
+      children,
+      whileHover,
+      whileTap,
+      whileInView,
+      initial,
+      animate,
+      transition,
+      viewport,
+      ...props
+    }: any) => <li {...props}>{children}</li>,
+    a: ({
+      children,
+      whileHover,
+      whileTap,
+      whileInView,
+      initial,
+      animate,
+      transition,
+      viewport,
+      ...props
+    }: any) => <a {...props}>{children}</a>,
   },
   AnimatePresence: ({ children }: any) => <>{children}</>,
 }))
@@ -42,8 +92,8 @@ vi.mock('framer-motion', () => ({
 vi.mock('next/link', () => ({
   default: function MockLink({ children, href, ...props }: any) {
     return (
-      <a 
-        href={href} 
+      <a
+        href={href}
         onClick={(e) => {
           e.preventDefault() // Prevent JSDOM navigation errors
           props.onClick?.(e)
@@ -53,26 +103,26 @@ vi.mock('next/link', () => ({
         {children}
       </a>
     )
-  }
+  },
 }))
 
 // Mock CTAButton components
 vi.mock('~/features/landing/components/cta-button', () => ({
   LoginCTA: ({ className, trackingId, external, ...props }: any) => (
-    <button 
-      className={className} 
-      data-testid="login-cta" 
-      data-external={external ? 'true' : 'false'} 
+    <button
+      className={className}
+      data-testid="login-cta"
+      data-external={external ? 'true' : 'false'}
       {...props}
     >
       ログイン
     </button>
   ),
   RegisterCTA: ({ className, trackingId, external, ...props }: any) => (
-    <button 
-      className={className} 
-      data-testid="register-cta" 
-      data-external={external ? 'true' : 'false'} 
+    <button
+      className={className}
+      data-testid="register-cta"
+      data-external={external ? 'true' : 'false'}
       {...props}
     >
       無料で始める
@@ -82,26 +132,50 @@ vi.mock('~/features/landing/components/cta-button', () => ({
 
 // Mock UI components
 vi.mock('~/components/ui/shadcn/button', () => ({
-  Button: ({ children, asChild, className, variant, ...props }: any) => 
+  Button: ({ children, asChild, className, variant, ...props }: any) =>
     asChild ? (
-      <div className={className} {...props}>{children}</div>
+      <div className={className} {...props}>
+        {children}
+      </div>
     ) : (
-      <button className={className} {...props}>{children}</button>
-    )
+      <button className={className} {...props}>
+        {children}
+      </button>
+    ),
 }))
 
 // Mock landing utils
 vi.mock('~/features/landing/utils', () => ({
-  cn: (...args: any[]) => args.filter(Boolean).join(' ')
+  cn: (...args: any[]) => args.filter(Boolean).join(' '),
 }))
 
 // Mock Lucide React icons
 vi.mock('lucide-react', () => ({
-  BookOpen: (props: any) => <svg data-testid="book-open-icon" {...props}><path d="book-open" /></svg>,
-  LogIn: (props: any) => <svg data-testid="log-in-icon" {...props}><path d="log-in" /></svg>,
-  Menu: (props: any) => <svg data-testid="menu-icon" {...props}><path d="menu" /></svg>,
-  UserPlus: (props: any) => <svg data-testid="user-plus-icon" {...props}><path d="user-plus" /></svg>,
-  X: (props: any) => <svg data-testid="x-icon" {...props}><path d="x" /></svg>,
+  BookOpen: (props: any) => (
+    <svg data-testid="book-open-icon" {...props}>
+      <path d="book-open" />
+    </svg>
+  ),
+  LogIn: (props: any) => (
+    <svg data-testid="log-in-icon" {...props}>
+      <path d="log-in" />
+    </svg>
+  ),
+  Menu: (props: any) => (
+    <svg data-testid="menu-icon" {...props}>
+      <path d="menu" />
+    </svg>
+  ),
+  UserPlus: (props: any) => (
+    <svg data-testid="user-plus-icon" {...props}>
+      <path d="user-plus" />
+    </svg>
+  ),
+  X: (props: any) => (
+    <svg data-testid="x-icon" {...props}>
+      <path d="x" />
+    </svg>
+  ),
 }))
 
 // Mock scroll behavior
@@ -114,7 +188,7 @@ Object.defineProperty(window, 'scrollTo', {
 describe('Navigation', () => {
   beforeEach(() => {
     mockScrollTo.mockClear()
-    
+
     // Reset scroll state
     updateScrollState(0, 'up')
 
@@ -301,16 +375,23 @@ describe('Navigation', () => {
       // Find the mobile menu version (inside the mobile menu container)
       const mobileLink = mobileLinks.find((link) => {
         const parent = link.closest('div')
-        return parent?.className.includes('fixed') || parent?.closest('div')?.className.includes('fixed')
+        return (
+          parent?.className.includes('fixed') || parent?.closest('div')?.className.includes('fixed')
+        )
       })
 
       if (mobileLink) {
         await user.click(mobileLink)
-        
+
         // Wait for menu to close
-        await waitFor(() => {
-          expect(screen.queryByRole('button', { name: /メニューを閉じる/i })).not.toBeInTheDocument()
-        }, { timeout: 2000 })
+        await waitFor(
+          () => {
+            expect(
+              screen.queryByRole('button', { name: /メニューを閉じる/i }),
+            ).not.toBeInTheDocument()
+          },
+          { timeout: 2000 },
+        )
       } else {
         // If we can't find the mobile link properly, just verify the menu opened
         expect(screen.getByRole('button', { name: /メニューを閉じる/i })).toBeInTheDocument()
@@ -395,8 +476,8 @@ describe('Navigation', () => {
       // Check accessibility with exclusions for landmark-unique issues
       const results = await axe(container, {
         rules: {
-          'landmark-unique': { enabled: false } // モバイルメニューで重複するランドマークを一時的に無視
-        }
+          'landmark-unique': { enabled: false }, // モバイルメニューで重複するランドマークを一時的に無視
+        },
       })
       expect(results).toHaveNoViolations()
     })

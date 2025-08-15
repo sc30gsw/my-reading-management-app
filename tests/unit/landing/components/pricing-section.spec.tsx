@@ -105,7 +105,7 @@ describe('PricingSection', () => {
     expect(freeButton).toHaveClass('bg-blue-600')
   })
 
-    it('年間料金の割引率が複数表示される', () => {
+  it('年間料金の割引率が複数表示される', () => {
     render(<PricingSection />)
 
     // プレミアムプランとチームプランで17%お得が複数表示される

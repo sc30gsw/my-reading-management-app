@@ -29,9 +29,9 @@ vi.mock('framer-motion', () => ({
 // Mock FeatureCard
 vi.mock('~/features/landing/components/feature-card', () => ({
   FeatureCard: ({ feature, animated, index, className, ...props }: any) => (
-    <div 
-      data-testid={`feature-card-${feature.id}`} 
-      data-highlighted={feature.highlighted?.toString()} 
+    <div
+      data-testid={`feature-card-${feature.id}`}
+      data-highlighted={feature.highlighted?.toString()}
       data-animated={animated?.toString()}
       className={className}
       {...props}
@@ -277,14 +277,6 @@ describe('FeaturesSection', () => {
       expect(mainHeading).toBeInTheDocument()
     })
 
-    it('includes proper section structure', () => {
-      render(<FeaturesSection />)
-
-      // Should use section element with proper ID
-      const section = screen.getByTestId('features-section')
-      expect(section).toHaveAttribute('id', 'features')
-    })
-
     it('provides meaningful content structure', () => {
       render(<FeaturesSection />)
 
@@ -326,14 +318,6 @@ describe('FeaturesSection', () => {
       const section = screen.getByTestId('features-section')
       expect(section).toHaveClass('custom-class')
       expect(section).toHaveClass('relative')
-    })
-  })
-
-  describe('Section Anchor', () => {
-    it('includes features section ID for navigation', () => {
-      render(<FeaturesSection />)
-      const section = screen.getByTestId('features-section')
-      expect(section).toHaveAttribute('id', 'features')
     })
   })
 

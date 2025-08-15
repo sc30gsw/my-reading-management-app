@@ -7,12 +7,26 @@ import type { FAQItem } from '~/features/landing/types'
 // Mock framer-motion
 vi.mock('framer-motion', () => ({
   motion: {
-    div: ({ children, layout, initial, animate, whileInView, transition, variants, ...props }: any) => (
-      <div {...props}>{children}</div>
-    ),
-    section: ({ children, layout, initial, animate, whileInView, transition, variants, ...props }: any) => (
-      <section {...props}>{children}</section>
-    ),
+    div: ({
+      children,
+      layout,
+      initial,
+      animate,
+      whileInView,
+      transition,
+      variants,
+      ...props
+    }: any) => <div {...props}>{children}</div>,
+    section: ({
+      children,
+      layout,
+      initial,
+      animate,
+      whileInView,
+      transition,
+      variants,
+      ...props
+    }: any) => <section {...props}>{children}</section>,
   },
   AnimatePresence: ({ children }: any) => children,
 }))
@@ -110,11 +124,10 @@ describe('FAQSection', () => {
       // より具体的なセレクターでカテゴリバッジを取得
       const categoryBadges = screen.getAllByText('一般')
       expect(categoryBadges.length).toBeGreaterThan(0)
-      
+
       // バッジクラスを持つ要素を確認
-      const badge = categoryBadges.find(el => 
-        el.classList.contains('bg-blue-100') && 
-        el.classList.contains('text-blue-800')
+      const badge = categoryBadges.find(
+        (el) => el.classList.contains('bg-blue-100') && el.classList.contains('text-blue-800'),
       )
       expect(badge).toBeInTheDocument()
     })
