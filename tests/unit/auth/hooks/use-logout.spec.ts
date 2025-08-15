@@ -1,10 +1,10 @@
-import { describe, test, expect, vi, beforeEach, afterEach } from 'vitest'
-import { renderHook, act } from '@testing-library/react'
+import { act, renderHook } from '@testing-library/react'
 import { useRouter } from 'next/navigation'
+import { useTransition } from 'react'
 import { toast } from 'sonner'
+import { afterEach, beforeEach, describe, expect, test, vi } from 'vitest'
 import { useLogout } from '~/features/auth/hooks/use-logout'
 import { authClient } from '~/lib/auth-client'
-import { useTransition } from 'react'
 
 // Mock dependencies
 vi.mock('next/navigation')
@@ -22,7 +22,7 @@ describe('useLogout', () => {
 
   beforeEach(() => {
     vi.clearAllMocks()
-    
+
     // Setup router mock
     vi.mocked(useRouter).mockReturnValue({
       push: mockPush,
@@ -55,7 +55,7 @@ describe('useLogout', () => {
 
     expect(result.current).toEqual({
       isPending: false,
-      handleLogout: expect.any(Function)
+      handleLogout: expect.any(Function),
     })
   })
 

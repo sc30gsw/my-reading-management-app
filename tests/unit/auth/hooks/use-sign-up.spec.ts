@@ -1,15 +1,15 @@
-import { describe, test, expect, vi, beforeEach, afterEach } from 'vitest'
-import { renderHook, act } from '@testing-library/react'
-import { useRouter } from 'next/navigation'
-import { toast } from 'sonner'
-import { useSignUp } from '~/features/auth/hooks/use-sign-up'
-import { signUpAction } from '~/features/auth/actions/sign-up-action'
-import { withCallbacks } from '~/utils/with-callback'
-import { ERROR_MESSAGE } from '~/features/auth/constants/validation'
-import { useActionState } from 'react'
-import { useToggle } from 'react-use'
 import { useForm, useInputControl } from '@conform-to/react'
 import { getZodConstraint, parseWithZod } from '@conform-to/zod/v4'
+import { act, renderHook } from '@testing-library/react'
+import { useRouter } from 'next/navigation'
+import { useActionState } from 'react'
+import { useToggle } from 'react-use'
+import { toast } from 'sonner'
+import { afterEach, beforeEach, describe, expect, test, vi } from 'vitest'
+import { signUpAction } from '~/features/auth/actions/sign-up-action'
+import { ERROR_MESSAGE } from '~/features/auth/constants/validation'
+import { useSignUp } from '~/features/auth/hooks/use-sign-up'
+import { withCallbacks } from '~/utils/with-callback'
 
 // Mock dependencies
 vi.mock('next/navigation')
@@ -36,7 +36,7 @@ describe('useSignUp', () => {
 
   beforeEach(() => {
     vi.clearAllMocks()
-    
+
     // Setup router mock
     vi.mocked(useRouter).mockReturnValue({
       push: mockPush,
@@ -75,11 +75,11 @@ describe('useSignUp', () => {
     const mockFields = {
       name: { name: 'name', value: '' },
       email: { name: 'email', value: '' },
-      password: { name: 'password', value: '' }
+      password: { name: 'password', value: '' },
     }
     const mockToggle = vi.fn()
     const mockPassword = { value: 'test-password' }
-    
+
     mockUseActionState.mockReturnValue([null, mockAction, false])
     mockUseToggle.mockReturnValue([false, mockToggle])
     mockUseForm.mockReturnValue([mockForm, mockFields])
@@ -97,13 +97,13 @@ describe('useSignUp', () => {
       toggle: mockToggle,
       form: mockForm,
       fields: mockFields,
-      password: mockPassword
+      password: mockPassword,
     })
   })
 
   test('should handle successful sign up', () => {
     const mockAction = vi.fn()
-    
+
     mockWithCallbacks.mockImplementation((action, callbacks) => {
       callbacks.onSuccess()
       return action
@@ -119,8 +119,8 @@ describe('useSignUp', () => {
       signUpAction,
       expect.objectContaining({
         onSuccess: expect.any(Function),
-        onError: expect.any(Function)
-      })
+        onError: expect.any(Function),
+      }),
     )
 
     // Trigger success callback
@@ -130,8 +130,8 @@ describe('useSignUp', () => {
     expect(mockToastSuccess).toHaveBeenCalledWith(
       'アカウント作成に成功しました。',
       expect.objectContaining({
-        position: 'top-center'
-      })
+        position: 'top-center',
+      }),
     )
     expect(mockPush).toHaveBeenCalledWith('/')
   })
@@ -139,9 +139,9 @@ describe('useSignUp', () => {
   test('should handle sign up error with custom message', () => {
     const mockAction = vi.fn()
     const errorResult = {
-      error: { message: 'Custom error message' }
+      error: { message: 'Custom error message' },
     }
-    
+
     mockWithCallbacks.mockImplementation((action, callbacks) => {
       callbacks.onError(errorResult)
       return action
@@ -160,8 +160,8 @@ describe('useSignUp', () => {
     expect(mockToastError).toHaveBeenCalledWith(
       'Custom error message',
       expect.objectContaining({
-        position: 'top-center'
-      })
+        position: 'top-center',
+      }),
     )
     expect(mockPush).not.toHaveBeenCalled()
   })
@@ -169,9 +169,9 @@ describe('useSignUp', () => {
   test('should handle sign up error with default message', () => {
     const mockAction = vi.fn()
     const errorResult = {
-      error: {}
+      error: {},
     }
-    
+
     mockWithCallbacks.mockImplementation((action, callbacks) => {
       callbacks.onError(errorResult)
       return action
@@ -190,14 +190,14 @@ describe('useSignUp', () => {
     expect(mockToastError).toHaveBeenCalledWith(
       ERROR_MESSAGE.FAILED_SIGN_UP,
       expect.objectContaining({
-        position: 'top-center'
-      })
+        position: 'top-center',
+      }),
     )
   })
 
   test('should toggle password visibility', () => {
     const mockToggle = vi.fn()
-    
+
     mockUseActionState.mockReturnValue([null, vi.fn(), false])
     mockUseToggle.mockReturnValue([false, mockToggle])
     mockUseForm.mockReturnValue([{}, {}])
@@ -215,7 +215,7 @@ describe('useSignUp', () => {
 
   test('should handle pending state', () => {
     const mockAction = vi.fn()
-    
+
     mockUseActionState.mockReturnValue([null, mockAction, true])
     mockUseToggle.mockReturnValue([false, vi.fn()])
     mockUseForm.mockReturnValue([{}, {}])
@@ -230,7 +230,7 @@ describe('useSignUp', () => {
   test('should configure form validation correctly', () => {
     const mockLastResult = { error: 'test error' }
     const mockConstraint = { email: { required: true } }
-    
+
     mockUseActionState.mockReturnValue([mockLastResult, vi.fn(), false])
     mockUseToggle.mockReturnValue([false, vi.fn()])
     mockGetZodConstraint.mockReturnValue(mockConstraint)
@@ -248,16 +248,16 @@ describe('useSignUp', () => {
         defaultValue: {
           name: '',
           email: '',
-          password: ''
-        }
-      })
+          password: '',
+        },
+      }),
     )
   })
 
   test('should validate form data with Zod schema', () => {
     const mockFormData = new FormData()
     const mockValidationResult = { success: true }
-    
+
     mockParseWithZod.mockReturnValue(mockValidationResult)
     mockUseActionState.mockReturnValue([null, vi.fn(), false])
     mockUseToggle.mockReturnValue([false, vi.fn()])
@@ -274,18 +274,18 @@ describe('useSignUp', () => {
     expect(mockParseWithZod).toHaveBeenCalledWith(
       mockFormData,
       expect.objectContaining({
-        schema: expect.any(Object)
-      })
+        schema: expect.any(Object),
+      }),
     )
     expect(result).toBe(mockValidationResult)
   })
 
   test('should use input control for password field', () => {
     const mockFields = {
-      password: { name: 'password', value: 'test-password' }
+      password: { name: 'password', value: 'test-password' },
     }
     const mockPasswordControl = { value: 'controlled-password' }
-    
+
     mockUseActionState.mockReturnValue([null, vi.fn(), false])
     mockUseToggle.mockReturnValue([false, vi.fn()])
     mockUseForm.mockReturnValue([{}, mockFields])
@@ -305,11 +305,11 @@ describe('useSignUp', () => {
     const mockFields = {
       name: { name: 'name' },
       email: { name: 'email' },
-      password: { name: 'password' }
+      password: { name: 'password' },
     }
     const mockPassword = { value: 'password123' }
     const mockToggle = vi.fn()
-    
+
     mockUseActionState.mockReturnValue([mockLastResult, mockAction, true])
     mockUseToggle.mockReturnValue([true, mockToggle])
     mockUseForm.mockReturnValue([mockForm, mockFields])
@@ -326,7 +326,7 @@ describe('useSignUp', () => {
       toggle: mockToggle,
       form: mockForm,
       fields: mockFields,
-      password: mockPassword
+      password: mockPassword,
     })
   })
 
@@ -334,11 +334,11 @@ describe('useSignUp', () => {
     const initialResult = { initial: true }
     const updatedResult = { updated: true }
     const mockAction = vi.fn()
-    
+
     mockUseActionState
       .mockReturnValueOnce([initialResult, mockAction, false])
       .mockReturnValueOnce([updatedResult, mockAction, true])
-    
+
     mockUseToggle.mockReturnValue([false, vi.fn()])
     mockUseForm.mockReturnValue([{}, {}])
     mockUseInputControl.mockReturnValue({})

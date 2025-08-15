@@ -82,12 +82,16 @@ vi.mock('sonner', () => ({
 // Auth service mock
 vi.mock('~/features/auth/services/auth-service', () => {
   const AuthServiceError = class AuthServiceError extends Error {
-    constructor(message: string, public code: string, public cause?: unknown) {
+    constructor(
+      message: string,
+      public code: string,
+      public cause?: unknown,
+    ) {
       super(message)
       this.name = 'AuthServiceError'
     }
   }
-  
+
   const AuthService = class AuthService {
     signUp = vi.fn()
     signIn = vi.fn()

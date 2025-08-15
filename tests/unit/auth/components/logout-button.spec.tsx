@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
-import { vi, describe, test, expect, beforeEach } from 'vitest'
+import { beforeEach, describe, expect, test, vi } from 'vitest'
 import { LogoutButton } from '~/features/auth/components/logout-button'
 
 // useLogoutフックのモック
