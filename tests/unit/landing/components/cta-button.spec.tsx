@@ -6,18 +6,41 @@ import { CTAButton } from '~/features/landing/components/cta-button'
 // Mock framer-motion
 vi.mock('framer-motion', () => ({
   motion: {
-    button: ({ children, whileHover, whileTap, whileInView, initial, animate, transition, ...props }: any) => (
-      <button {...props}>{children}</button>
-    ),
-    div: ({ children, whileHover, whileTap, whileInView, initial, animate, transition, ...props }: any) => (
-      <div {...props}>{children}</div>
-    ),
+    button: ({
+      children,
+      whileHover,
+      whileTap,
+      whileInView,
+      initial,
+      animate,
+      transition,
+      ...props
+    }: any) => <button {...props}>{children}</button>,
+    div: ({
+      children,
+      whileHover,
+      whileTap,
+      whileInView,
+      initial,
+      animate,
+      transition,
+      ...props
+    }: any) => <div {...props}>{children}</div>,
   },
 }))
 
 // Mock Next.js Link
 vi.mock('next/link', () => ({
-  default: ({ children, href, target, rel, external, 'aria-label': ariaLabel, 'aria-describedby': ariaDescribedby, ...props }: any) => {
+  default: ({
+    children,
+    href,
+    target,
+    rel,
+    external,
+    'aria-label': ariaLabel,
+    'aria-describedby': ariaDescribedby,
+    ...props
+  }: any) => {
     const linkProps: any = { href, ...props }
     if (external) {
       linkProps.target = '_blank'
@@ -126,8 +149,8 @@ describe('CTAButton', () => {
   })
 
   it('クリックイベントが正しく動作する', async () => {
-    const handleClick = vi.fn((e) => {
-      e?.preventDefault?.() // ナビゲーションを防ぐ
+    const handleClick = vi.fn(() => {
+      // クリックハンドラー
     })
     render(
       <CTAButton href="/register" onClick={handleClick}>
