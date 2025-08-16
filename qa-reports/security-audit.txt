@@ -1,0 +1,13 @@
+esbuild  <=0.24.2
+  drizzle-kit › esbuild
+  vitest › vite-node › vite › esbuild
+  moderate: esbuild enables any website to send any requests to the development server and read the response - https://github.com/advisories/GHSA-67mh-4wv8-2f99
+
+1 vulnerabilities (1 moderate)
+
+To update all dependencies to the latest compatible versions:
+  bun update
+
+To update all dependencies to the latest versions (including breaking changes):
+  bun update --latest
+

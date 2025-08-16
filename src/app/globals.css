@@ -4,6 +4,14 @@
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
+  /* Custom breakpoints for better mobile optimization */
+  --breakpoint-xs: 375px;
+  --breakpoint-sm: 640px;
+  --breakpoint-md: 768px;
+  --breakpoint-lg: 1024px;
+  --breakpoint-xl: 1280px;
+  --breakpoint-2xl: 1536px;
+  
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
@@ -118,5 +126,70 @@
   }
   body {
     @apply bg-background text-foreground;
+  }
+  
+  /* Mobile-first responsive utilities */
+  .touch-target {
+    @apply min-h-[44px] min-w-[44px];
+  }
+  
+  /* Custom responsive text utilities */
+  .text-responsive-xl {
+    @apply text-xl xs:text-2xl sm:text-3xl md:text-4xl lg:text-5xl;
+  }
+  
+  .text-responsive-lg {
+    @apply text-lg xs:text-xl sm:text-2xl md:text-3xl;
+  }
+  
+  .text-responsive-base {
+    @apply text-sm xs:text-base sm:text-lg md:text-xl;
+  }
+  
+  /* Enhanced mobile spacing */
+  .section-padding {
+    @apply py-12 xs:py-16 sm:py-20 md:py-24 lg:py-28;
+  }
+  
+  .container-padding {
+    @apply px-4 xs:px-6 sm:px-8 lg:px-12;
+  }
+  
+  /* Mobile-optimized grid gaps */
+  .grid-gap-responsive {
+    @apply gap-4 xs:gap-6 sm:gap-8 lg:gap-10;
+  }
+  
+  /* Performance optimizations */
+  .gpu-accelerated {
+    transform: translateZ(0);
+    will-change: transform;
+  }
+  
+  .will-change-transform {
+    will-change: transform;
+  }
+  
+  .will-change-opacity {
+    will-change: opacity;
+  }
+  
+  /* Reduced motion support */
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+  
+  /* Smooth scrolling for supported browsers */
+  @media (prefers-reduced-motion: no-preference) {
+    html {
+      scroll-behavior: smooth;
+    }
   }
 }

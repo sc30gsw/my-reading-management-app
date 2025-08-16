@@ -245,7 +245,7 @@ describe('RegisterForm navigation', () => {
     // Assert
     const loginLink = screen.getByText(/ログイン|既にアカウントをお持ちの方/i)
     expect(loginLink).toBeInTheDocument()
-    expect(loginLink.closest('a')).toHaveAttribute('href', '/login')
+    expect(loginLink.closest('a')).toHaveAttribute('href', '/sign-in')
   })
 })
 ```

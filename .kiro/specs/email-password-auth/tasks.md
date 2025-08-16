@@ -58,16 +58,16 @@
 ## UIコンポーネント（TDD実装）
 
 - [ ] 7. SignUpFormコンポーネント
-  - **Red**: `src/components/features/auth/sign-up-form.spec.tsx`で失敗テストを作成
-  - **Green**: `src/components/features/auth/sign-up-form.tsx`でフォームコンポーネント実装
+  - **Red**: `src/components/features/sign-up-form.spec.tsx`で失敗テストを作成
+  - **Green**: `src/components/features/sign-up-form.tsx`でフォームコンポーネント実装
   - Conform + shadcn/ui統合でプログレッシブエンハンスメント対応
   - リアルタイムバリデーション、エラー表示、ローディング状態管理
   - **Refactor**: コンポーネント分割とアクセシビリティ改善
   - _Requirements: REQ-1.1, REQ-1.5_
 
 - [ ] 8. SignInFormコンポーネント
-  - **Red**: `src/components/features/auth/sign-in-form.spec.tsx`で失敗テストを作成
-  - **Green**: `src/components/features/auth/sign-in-form.tsx`でログインフォーム実装
+  - **Red**: `src/components/features/sign-in-form.spec.tsx`で失敗テストを作成
+  - **Green**: `src/components/features/sign-in-form.tsx`でログインフォーム実装
   - Conform統合、パスワード表示切り替え、「Remember me」機能
   - エラー状態表示とユーザビリティ向上
   - **Refactor**: フォーム再利用性とパフォーマンス最適化

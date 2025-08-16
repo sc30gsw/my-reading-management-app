@@ -40,6 +40,7 @@ This project implements Kiro-style Spec-Driven Development for Claude Code using
 **Active Specifications**
 - Location: `.kiro/specs/`
 - `email-password-auth` - メール/パスワード認証機能（要件定義項目2.5対応）
+- `landing-page` - ランディングページ機能
 - Command: `/kiro:spec-status [feature-name]`
 - Description: Check progress of active specifications
 
